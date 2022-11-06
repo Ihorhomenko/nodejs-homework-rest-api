@@ -6,12 +6,12 @@ const schemaContact = Joi.object({
   phone: Joi.string().required()
 })
 
-const shemaUser = Joi.object({
+const schemaUser = Joi.object({
   email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'ua'] } }).required(),
   password: Joi.string().min(6).required()
 })
 
 module.exports = {
   schemaContact,
-  shemaUser,
+  schemaUser,
 }
