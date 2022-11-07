@@ -2,8 +2,9 @@ const User = require("../../models/users")
 
 const {RequestError} = require("../../helpers")
 
-const verify = async (req, res, next) => {
+const verify = async (req, res) => {
     const {verificationToken} = req.params;
+    console.log(verificationToken)
     const user = await User.findOne({verificationToken})
 
     if(!user) {

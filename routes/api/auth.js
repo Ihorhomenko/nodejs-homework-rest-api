@@ -9,7 +9,9 @@ const router = express.Router()
 
 router.post("/signup", ctrl.registration)
 
-router.get("verify/:verificationToken", ctrl.verify)
+router.get("/verify/:verificationToken", ctrl.verify)
+
+router.post("/verify", ctrl.resendEmail)
 
 router.post("/login", ctrl.login)
 

@@ -1,7 +1,8 @@
 const bcrypt = require("bcryptjs")
+const {nanoid} = require("nanoid") 
 
 const User = require('../../models/users')
-const {validateSchemas} = require("../../helpers")
+const {validateSchemas, verifyEmail, sendEmail} = require("../../helpers")
 
 const registration = async (req, res, next) => {
     const {email, password} = req.body;
@@ -18,7 +19,12 @@ const registration = async (req, res, next) => {
         throw next(error);
     }
     const hashPassword = await bcrypt.hash(password, 10)
-    const result = await User.create({email, password: hashPassword});
+    const verificationToken = nanoid()
+    const result = await User.create({email, password: hashPassword, verificationToken});
+
+    const mail = verifyEmail(email, verificationToken)
+
+    await sendEmail(mail)
 
     res.status(201).json({
         "user": {
